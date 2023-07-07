@@ -1,8 +1,9 @@
 package com.poly.shop.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +21,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -27,8 +31,10 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "SAN_PHAM")
+
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-public class SanPham {
+
+public class SanPham implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,19 +42,16 @@ public class SanPham {
     @Column(name = "TEN")
     private String ten;
 
-    @OneToOne (fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne (fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "THONG_SO_ID",referencedColumnName = "ID")
-    @JsonProperty("thongSo")
     private ThongSo thongSo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DANH_MUC_id",referencedColumnName = "ID")
-    @JsonIgnoreProperties(value = {"sanPhams"}, allowSetters = true)
     private DanhMuc danhMuc;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "THUONG_HIEU_ID",referencedColumnName = "ID")
-    @JsonIgnoreProperties(value = {"sanPhams"}, allowSetters = true)
     private ThuongHieu thuongHieu;
 
     @Column(name = "GIA")

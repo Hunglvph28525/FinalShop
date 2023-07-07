@@ -1,6 +1,7 @@
 package com.poly.shop.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +16,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -22,7 +26,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "THONG_SO")
-public class ThongSo {
+public class ThongSo implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +41,7 @@ public class ThongSo {
     private String camera;
     @Column(name = "PIN_SAC")
     private String pinSac;
+    @JsonIgnore
     @OneToOne(mappedBy = "thongSo")
     private SanPham sanPham;
 

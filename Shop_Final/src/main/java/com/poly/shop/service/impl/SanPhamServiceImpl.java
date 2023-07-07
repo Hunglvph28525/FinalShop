@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SanPhamServiceImpl implements SanPhamService {
@@ -19,8 +20,13 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
-    public SanPham getSanPhamById(Long id) {
-        return repository.getReferenceById(id);
+    public Optional<SanPham> getSanPhamById(Long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public boolean check(Long id) {
+        return repository.existsById(id);
     }
 
     @Override

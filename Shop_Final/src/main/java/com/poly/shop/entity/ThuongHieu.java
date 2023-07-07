@@ -1,6 +1,6 @@
 package com.poly.shop.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
@@ -25,7 +26,7 @@ import java.util.List;
 @Entity
 @Table(name = "THUONG_HIEU")
 
-public class ThuongHieu {
+public class ThuongHieu implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,7 @@ public class ThuongHieu {
     private String ten;
     @Column(name = "URL_LOGO")
     private String urlLogo;
+    @JsonIgnore
     @OneToMany(mappedBy = "thuongHieu", cascade = CascadeType.ALL)
     private List<SanPham> sanPhams;
 }
