@@ -1,6 +1,11 @@
 package com.poly.shop.controller;
 
+import com.poly.shop.entity.DanhMuc;
 import com.poly.shop.entity.SanPham;
+import com.poly.shop.entity.SanPhamCT;
+import com.poly.shop.entity.ThongSo;
+import com.poly.shop.model.SanPhamModel;
+import com.poly.shop.service.SanPhamCTService;
 import com.poly.shop.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +26,8 @@ import java.util.Optional;
 public class SanPhamController {
     @Autowired
     private SanPhamService service;
+    @Autowired
+    private SanPhamCTService sanPhamCTService;
 
     @GetMapping
     public ResponseEntity<List<SanPham>> getAll() {
@@ -37,17 +44,36 @@ public class SanPhamController {
     }
 
     @PostMapping
-    public ResponseEntity<SanPham> createSanPham(@RequestBody SanPham sanPham) {
+    public ResponseEntity<SanPham> createSanPham(@RequestBody SanPhamModel sanPhamModel) {
 //        if (service.check(sanPham.getId())) {
 //            return ResponseEntity.badRequest().build();
 //        }
-        return ResponseEntity.ok(service.create(sanPham));
+        SanPham sanPham = new SanPham();
+        sanPham.setTen(sanPhamModel.getTenSP());
+        sanPham.setDanhMuc(sanPhamModel.getDanhMuc());
+        sanPham.setGia(sanPhamModel.getGia());
+        sanPham.setMota(sanPhamModel.getMota());
+        sanPham.setThongSo(sanPhamModel.getThongSo());
+        sanPham.setThuongHieu(sanPhamModel.getThuongHieu());
+        sanPham = service.create(sanPham);
+        System.out.println(sanPham.toString());
+        SanPhamCT sanPhamCT = new SanPhamCT();
+        sanPhamCT.setSanPham(sanPham);
+        sanPhamCT.setBoNho(sanPhamModel.getBoNho());
+        sanPhamCT.setBaoHanh(sanPhamModel.getBaoHanh());
+        sanPhamCT.setMauSac(sanPhamModel.getMauSac());
+        sanPhamCT.setGia(sanPhamModel.getGia());
+        sanPhamCT.setSoLuong(sanPhamModel.getSoLuong());
+        sanPhamCT.setTrangThai(sanPhamModel.isTrangThai());
+        sanPhamCTService.newOption(sanPhamCT);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SanPham> updateSanPham(@PathVariable("id") Long id, @RequestBody SanPham sanPham) {
         sanPham.setId(id);
         if (service.check(id)){
+
             return ResponseEntity.ok(service.create(sanPham));
         }
             return ResponseEntity.notFound().build();
@@ -58,5 +84,10 @@ public class SanPhamController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+    @GetMapping("/test")
+    public SanPhamModel sanPhamModel(){
+        SanPhamModel sanPhamModel = new SanPhamModel();
+        return sanPhamModel;
     }
 }

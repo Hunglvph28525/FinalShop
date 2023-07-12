@@ -1,7 +1,5 @@
 package com.poly.shop.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
@@ -13,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -22,6 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -46,12 +46,14 @@ public class SanPham implements Serializable {
     @JoinColumn(name = "THONG_SO_ID",referencedColumnName = "ID")
     private ThongSo thongSo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DANH_MUC_id",referencedColumnName = "ID")
+    @JsonIgnore
     private DanhMuc danhMuc;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "THUONG_HIEU_ID",referencedColumnName = "ID")
+    @JsonIgnore
     private ThuongHieu thuongHieu;
 
     @Column(name = "GIA")
@@ -59,5 +61,9 @@ public class SanPham implements Serializable {
 
     @Column(name = "MOTA")
     private String mota;
+
+    @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<SanPhamCT> sanPhamCTS;
 
 }

@@ -1,6 +1,7 @@
 package com.poly.shop.service.impl;
 
 import com.poly.shop.entity.SanPham;
+import com.poly.shop.model.SanPhamModel;
 import com.poly.shop.repository.SanPhamRepository;
 import com.poly.shop.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
