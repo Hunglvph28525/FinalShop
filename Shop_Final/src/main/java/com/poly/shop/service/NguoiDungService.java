@@ -7,7 +7,7 @@ import java.util.List;
 public interface NguoiDungService {
     List<NguoiDung> getAll();
 
-    NguoiDung getNguoiDungByUsername(String username, String pass);
+    NguoiDung getNguoiDungByUsername(String username);
 
     NguoiDung createNguoiDung(NguoiDung nguoiDung);
 

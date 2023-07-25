@@ -1,9 +1,7 @@
 package com.poly.shop.controller;
 
-import com.poly.shop.entity.DanhMuc;
 import com.poly.shop.entity.SanPham;
 import com.poly.shop.entity.SanPhamCT;
-import com.poly.shop.entity.ThongSo;
 import com.poly.shop.model.SanPhamModel;
 import com.poly.shop.service.SanPhamCTService;
 import com.poly.shop.service.SanPhamService;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/san-pham")
@@ -35,12 +32,12 @@ public class SanPhamController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SanPham> getSanPham(@PathVariable("id") Long id) {
-        Optional<SanPham> optional = service.getSanPhamById(id);
-        if (optional.isPresent()){
-            return ResponseEntity.ok(optional.get());
+    public ResponseEntity<List<SanPhamCT>> getSanPham(@PathVariable("id") Long id) {
+        List<SanPhamCT> list = sanPhamCTService.getListBySpID(id);
+        if (list == null) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping
@@ -59,7 +56,6 @@ public class SanPhamController {
         System.out.println(sanPham.toString());
         SanPhamCT sanPhamCT = new SanPhamCT();
         sanPhamCT.setSanPham(sanPham);
-        sanPhamCT.setBoNho(sanPhamModel.getBoNho());
         sanPhamCT.setBaoHanh(sanPhamModel.getBaoHanh());
         sanPhamCT.setMauSac(sanPhamModel.getMauSac());
         sanPhamCT.setGia(sanPhamModel.getGia());
@@ -72,22 +68,33 @@ public class SanPhamController {
     @PutMapping("/{id}")
     public ResponseEntity<SanPham> updateSanPham(@PathVariable("id") Long id, @RequestBody SanPham sanPham) {
         sanPham.setId(id);
-        if (service.check(id)){
+        if (service.check(id)) {
 
             return ResponseEntity.ok(service.create(sanPham));
         }
-            return ResponseEntity.notFound().build();
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSanPham(@PathVariable("id") Long id){
-        if (service.check(id)){
-            return ResponseEntity.ok().build();
-        }
         return ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSanPham(@PathVariable("id") Long id) {
+        if (service.check(id)) {
+            service.delete(id);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/test")
-    public SanPhamModel sanPhamModel(){
+    public SanPhamModel sanPhamModel() {
         SanPhamModel sanPhamModel = new SanPhamModel();
         return sanPhamModel;
+    }
+
+    @PostMapping("/newOption/{id}")
+    public ResponseEntity<SanPhamCT> newOption(@RequestBody SanPhamCT sanPhamCT, @PathVariable("id") Long id) {
+        SanPham sanPham = service.getSanPhamById(id).get();
+        sanPhamCT.setSanPham(sanPham);
+        return ResponseEntity.ok(sanPhamCTService.newOption(sanPhamCT));
     }
 }

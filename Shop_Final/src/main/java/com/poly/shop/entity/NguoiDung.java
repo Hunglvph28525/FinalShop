@@ -1,5 +1,6 @@
 package com.poly.shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,6 +51,8 @@ public class NguoiDung {
     private String username;
     @Column(name = "PASSWORD")
     private String password;
-    @Column(name = "ROLE")
-    private Boolean role;
+    @OneToMany(mappedBy = "nguoiDung")
+    @JsonIgnore
+    Set<UserRole> userRole = new HashSet<>();
+
 }

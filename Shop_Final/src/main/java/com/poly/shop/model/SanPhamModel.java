@@ -1,6 +1,5 @@
 package com.poly.shop.model;
 
-import com.poly.shop.entity.BoNho;
 import com.poly.shop.entity.DanhMuc;
 import com.poly.shop.entity.MauSac;
 import com.poly.shop.entity.ThongSo;
@@ -24,7 +23,7 @@ public class SanPhamModel {
     private DanhMuc danhMuc;
     private ThuongHieu thuongHieu;
     private MauSac mauSac;
-    private BoNho boNho;
+
     private Double gia;
     private String mota;
     private Integer soLuong;

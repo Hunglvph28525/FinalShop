@@ -34,9 +34,6 @@ public class SanPhamCT {
     @JoinColumn(name = "SAN_PHAM_ID",referencedColumnName = "ID")
     private SanPham sanPham;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "BO_NHO_ID",referencedColumnName = "ID")
-    private BoNho boNho;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MAU_SAC_ID",referencedColumnName = "ID")
     private MauSac mauSac;
@@ -48,4 +45,5 @@ public class SanPhamCT {
     private String baoHanh;
     @Column(name = "TRANG_THAI")
     private Boolean trangThai;
+
 }

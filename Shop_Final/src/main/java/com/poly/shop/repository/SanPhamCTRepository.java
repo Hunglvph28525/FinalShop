@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface SanPhamCTRepository extends JpaRepository<SanPhamCT,Long> {
-    @Query("select c from SanPhamCT c where c.sanPham.id = :id")
+    @Query("select c from SanPhamCT c where c.sanPham.id = :id and c.trangThai = true ")
     List<SanPhamCT> findAllBySpId(Long id);
 }

@@ -62,6 +62,9 @@ public class SanPham implements Serializable {
     @Column(name = "MOTA")
     private String mota;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sanPham")
+    private List<Image> images;
+
     @OneToMany(mappedBy = "sanPham",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<SanPhamCT> sanPhamCTS;
