@@ -1,4 +1,4 @@
-package com.poly.shop.controller;
+package com.poly.shop.controller.admin;
 
 import com.poly.shop.entity.SanPham;
 import com.poly.shop.entity.SanPhamCT;
@@ -19,26 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/san-pham")
-public class SanPhamController {
+@RequestMapping("/admin/api/product")
+public class SanPhamAdminController {
+
     @Autowired
     private SanPhamService service;
     @Autowired
     private SanPhamCTService sanPhamCTService;
-
-    @GetMapping
-    public ResponseEntity<List<SanPham>> getAll() {
-        return ResponseEntity.ok(service.getAll());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<List<SanPhamCT>> getSanPham(@PathVariable("id") Long id) {
-        List<SanPhamCT> list = sanPhamCTService.getListBySpID(id);
-        if (list == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(list);
-    }
 
     @PostMapping
     public ResponseEntity<SanPham> createSanPham(@RequestBody SanPhamModel sanPhamModel) {
@@ -85,16 +72,16 @@ public class SanPhamController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/test")
-    public SanPhamModel sanPhamModel() {
-        SanPhamModel sanPhamModel = new SanPhamModel();
-        return sanPhamModel;
-    }
 
     @PostMapping("/newOption/{id}")
     public ResponseEntity<SanPhamCT> newOption(@RequestBody SanPhamCT sanPhamCT, @PathVariable("id") Long id) {
         SanPham sanPham = service.getSanPhamById(id).get();
         sanPhamCT.setSanPham(sanPham);
         return ResponseEntity.ok(sanPhamCTService.newOption(sanPhamCT));
+    }
+    @GetMapping("test")
+    ResponseEntity<List<SanPham>> test(){
+        List<SanPham> list = service.getAll();
+        return ResponseEntity.ok(list);
     }
 }

@@ -1,4 +1,4 @@
-package com.poly.shop.controller;
+package com.poly.shop.controller.users;
 
 import com.poly.shop.entity.NguoiDung;
 import com.poly.shop.service.NguoiDungService;
