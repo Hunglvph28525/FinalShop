@@ -1,10 +1,10 @@
 package com.poly.shop.repository;
 
-import com.poly.shop.entity.Roles;
+import com.poly.shop.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RolesRepository extends JpaRepository<Roles,Long> {
-    Roles findByName(String name);
+public interface UsersRepository extends JpaRepository<Users, Long> {
+    Users findByUsername(String username);
 }

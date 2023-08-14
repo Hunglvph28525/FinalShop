@@ -34,25 +34,15 @@ public class SercurityConfig {
     BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//
-////        http.csrf().disable().
-////                authorizeHttpRequests().requestMatchers(HttpMethod.GET,"/").permitAll()
-////                .requestMatchers(HttpMethod.GET.POST.PUT.DELETE,"/admin/**").hasAuthority("ADMIN")
-////                .anyRequest().authenticated()
-////                .and().formLogin().loginPage("/login").permitAll()
-////                .defaultSuccessUrl("/home")
-////                .failureUrl("/login/error")
-////                .loginProcessingUrl("/dang-nhap")
-////                .and()
-////                .logout().logoutUrl("/logout").permitAll()
-////                .logoutSuccessUrl("/login")
-////                .invalidateHttpSession(true)
-////                .deleteCookies("JSESSIONID")
-////        ;
-////        return http.build();
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http.csrf().disable().authorizeRequests()
+        .requestMatchers("/admin/**").hasRole("ADMIN")
+        .anyRequest().permitAll();
+
+        return http.build();
+    }
 
 
 }

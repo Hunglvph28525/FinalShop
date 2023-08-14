@@ -1,0 +1,29 @@
+package com.poly.shop.entity;
+
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.util.List;
+
+
+@Entity
+@Table(name = "storage")
+public class Storage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "ram",length = 20,nullable = false)
+    private String ram;
+    @Column(name = "rom",length = 20,nullable = false)
+    private String rom;
+    @OneToMany(mappedBy = "storage", cascade = CascadeType.ALL)
+    List<ProductDetail> productDetail;
+}

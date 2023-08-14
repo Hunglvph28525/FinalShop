@@ -17,16 +17,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "IMAGES")
+@Table(name = "image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
-    @Column(name = "URL_IMG")
-    private String urlImage;
+    @Column(name = "url_img")
+    private String urlImg;
     @ManyToOne
-    @JoinColumn(name = "SAN_PHAM_ID", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     @JsonIgnore
-    private SanPham sanPham;
+    private Product product;
 }
