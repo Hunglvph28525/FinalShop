@@ -21,7 +21,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "cart")
 public class Cart {

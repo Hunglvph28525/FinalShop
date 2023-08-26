@@ -29,4 +29,11 @@ public class Image {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @JsonIgnore
     private Product product;
+
+    public Image(String urlImg, Long productId) {
+        Product product = new Product();
+        product.setId(productId);
+        this.urlImg = urlImg;
+        this.product = product;
+    }
 }

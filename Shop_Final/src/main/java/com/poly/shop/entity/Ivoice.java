@@ -21,7 +21,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "ivoice")
 

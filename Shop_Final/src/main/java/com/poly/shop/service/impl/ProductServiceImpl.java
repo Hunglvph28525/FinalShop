@@ -1,6 +1,7 @@
 package com.poly.shop.service.impl;
 
-import com.poly.shop.dto.ProductModel;
+import com.poly.shop.dto.ProductDto;
+import com.poly.shop.entity.Image;
 import com.poly.shop.repository.ImageRepository;
 import com.poly.shop.repository.ProductRepository;
 import com.poly.shop.service.ProductService;
@@ -16,19 +17,27 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ImageRepository imageRepository;
     @Override
-    public List<ProductModel> getAll() {
-        List<ProductModel> list = repository.getAll();
-        list.stream().forEach(x -> x.setImages(imageRepository.findByProduct(x.getId())));
+    public List<ProductDto> getAll() {
+        List<ProductDto> list = repository.getAll();
+        list.stream().forEach(x -> {
+            Image image = imageRepository.findByProduct(x.getId()).stream().findFirst().orElse(null);
+            if (image != null) {
+                x.setImages(image.getUrlImg());
+            } else {
+                x.setImages(null);
+            }
+        });
+
         return list;
     }
 
     @Override
-    public List<ProductModel> getByBrand() {
-        return null;
+    public List<ProductDto> getByBrand(Long id) {
+        return repository.getAllByBrand(id);
     }
 
     @Override
-    public List<ProductModel> getByCategory() {
-        return null;
+    public List<ProductDto> getByCategory(Long id) {
+        return repository.getAllByCategory(id);
     }
 }

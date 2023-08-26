@@ -28,13 +28,11 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "product")
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 
-public class Product implements Serializable {
+public class Product {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,15 +40,15 @@ public class Product implements Serializable {
     @Column(name = "name",columnDefinition = ("nvarchar(255)"))
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "specification_id", referencedColumnName = "id")
     private Specification specification;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Categorys categorys;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
 

@@ -2,7 +2,6 @@ package com.poly.shop.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,13 +12,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "product_detail")
 public class ProductDetail {
@@ -28,15 +25,15 @@ public class ProductDetail {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Colors color;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "storage_id",referencedColumnName = "id")
     private Storage storage;
 

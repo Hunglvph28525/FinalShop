@@ -13,19 +13,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "brand")
-public class Brand implements Serializable {
+public class Brand {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +34,8 @@ public class Brand implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
     private List<Product> products;
+
+    public Brand(Long id) {
+        this.id = id;
+    }
 }

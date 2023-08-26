@@ -1,8 +1,7 @@
 package com.poly.shop.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
+import com.poly.shop.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,20 +13,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
-import java.io.Serializable;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity
 @Table(name = "specification")
 //Thông SỐ
-public class Specification implements Serializable {
+public class Specification {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +41,11 @@ public class Specification implements Serializable {
     @OneToOne(mappedBy = "specification")
     private Product product;
 
-
+    public Specification(ProductRequestDto x) {
+        this.screen = x.getScreen();
+        this.os = x.getOs();
+        this.cpu = x.getCpu();
+        this.camera = x.getCamera();
+        this.battery = x.getBattery();
+    }
 }
